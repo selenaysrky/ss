@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABL Foods - İK Mola Merkezi 🐥🐟</title>
+<!-- Yazı tipleri (yüklenemezse sistem fontuna düşer, sayfa bozulmaz) -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   RENK PALETİ (1. kodun Tailwind renkleri, saf CSS olarak)
+   ========================================================= */
+:root{
+  --o50:#fff7ed;--o100:#ffedd5;--o200:#fed7aa;--o400:#fb923c;--o500:#f97316;--o600:#ea580c;--o700:#c2410c;--o800:#9a3412;--o900:#7c2d12;
+  --a50:#fffbeb;--a100:#fef3c7;--a200:#fde68a;--a500:#f59e0b;--a700:#b45309;--a900:#78350f;
+  --s50:#f0f9ff;--s100:#e0f2fe;--s200:#bae6fd;--s600:#0284c7;--s700:#0369a1;--s800:#075985;--s900:#0c4a6e;
+  --sl50:#f8fafc;--sl100:#f1f5f9;--sl200:#e2e8f0;--sl300:#cbd5e1;--sl400:#94a3b8;--sl500:#64748b;--sl600:#475569;--sl700:#334155;--sl800:#1e293b;
+  --em600:#059669;--em700:#047857;--rose:#e11d48;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+/* Google Sites içinde çıkıntı/boşluk olmaması için şeffaf gövde */
+html,body{background:transparent}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--sl800);padding:8px;line-height:1.4;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.playful{font-family:'Fredoka','Inter',system-ui,sans-serif}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input{font-family:inherit}
+
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--sl100);border-radius:8px}
+::-webkit-scrollbar-thumb{background:var(--sl300);border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:var(--sl400)}
+
+/* Ana kart: arka plan gradyanı body yerine burada */
+.app{max-width:920px;margin:0 auto;background:linear-gradient(135deg,#fffbeb 0%,#fff7ed 50%,#f0f9ff 100%);border-radius:28px;border:1px solid var(--o100);box-shadow:0 10px 30px rgba(234,88,12,.08);overflow:hidden;padding-bottom:20px}
+
+/* ---------- ÜST BİLGİ ---------- */
+.topbar{background:rgba(255,255,255,.9);border-bottom:1px solid var(--o100);padding:12px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:16px;background:linear-gradient(45deg,var(--o500),#fbbf24);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 10px rgba(249,115,22,.3);flex-shrink:0}
+.grad-text{font-size:22px;font-weight:700;line-height:1.15;background:linear-gradient(90deg,var(--o600),var(--a500),var(--s600));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:12px;color:var(--sl500)}
+.tabs{display:flex;background:rgba(255,247,237,.9);padding:6px;border-radius:16px;border:1px solid rgba(254,215,170,.7);gap:4px}
+.tab{padding:8px 14px;border-radius:12px;font-size:14px;font-weight:600;color:var(--sl600);transition:all .2s;white-space:nowrap}
+.tab:hover{color:var(--o600)}
+.tab.active{background:linear-gradient(90deg,var(--o500),var(--a500));color:#fff;box-shadow:0 2px 6px rgba(249,115,22,.3)}
+@media(max-width:560px){
+  .topbar{flex-direction:column}
+  .tabs{width:100%}
+  .tab{flex:1;font-size:13px;padding:8px 6px}
+  .grad-text{font-size:19px}
+}
+
+/* ---------- GENEL DÜZEN ---------- */
+.view{display:none;padding:20px 18px 0}
+.view.active{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+@media(min-width:780px){.layout{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
+.panel{background:#fff;border-radius:24px;padding:20px;border:1px solid var(--o100);box-shadow:0 4px 14px rgba(15,23,42,.05);display:flex;flex-direction:column;gap:16px}
+.row-between{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.badge{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--o600);background:var(--o50);padding:4px 10px;border-radius:99px}
+.badge.amber{color:var(--a700);background:var(--a100)}
+h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
+.muted{color:var(--sl500);font-size:12px}
+.btn-soft{padding:8px 14px;background:var(--o100);color:var(--o700);font-weight:600;border-radius:12px;font-size:14px;transition:background .2s;box-shadow:0 1px 2px rgba(0,0,0,.05);white-space:nowrap}
+.btn-soft:hover{background:var(--o200)}
+.btn-soft.lg{padding:12px 20px}
+
+/* ---------- SKOR KARTLARI ---------- */
+.scores{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.score-card{border-radius:16px;padding:10px;text-align:center;border:1px solid}
+.score-card.amber{background:var(--a50);border-color:rgba(253,230,138,.7)}
+.score-card.sky{background:var(--s50);border-color:rgba(186,230,253,.7)}
+.score-lbl{font-size:11px;font-weight:600;text-transform:uppercase}
+.amber .score-lbl{color:var(--a700)}
+.sky .score-lbl{color:var(--s700)}
+.score-val{font-family:'Fredoka','Inter',sans-serif;font-size:26px;font-weight:700}
+.amber .score-val{color:var(--a900)}
+.sky .score-val{color:var(--s900)}
+
+/* ---------- TEMA SEÇİCİ ---------- */
+.box{background:var(--sl50);padding:14px;border-radius:16px;border:1px solid rgba(226,232,240,.8)}
+.box-lbl{display:block;font-size:11px;font-weight:700;color:var(--sl600);text-transform:uppercase;margin-bottom:8px}
+.theme-opt{width:100%;text-align:left;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:600;border:2px solid transparent;background:#fff;color:var(--sl700);display:flex;justify-content:space-between;align-items:center;gap:8px;transition:all .2s}
+.theme-opt+.theme-opt{margin-top:8px}
+.theme-opt:hover{background:var(--sl100)}
+.theme-opt .check{width:18px;height:18px;border-radius:50%;border:2px solid var(--sl400);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.theme-opt.active{border-color:var(--o500);background:rgba(255,247,237,.7);color:var(--o900)}
+.theme-opt.active .check{background:var(--o500);border-color:var(--o500)}
+.theme-opt.active .check::after{content:'✓'}
+
+/* ---------- EKİP FOTOĞRAFI ALANI ---------- */
+.photo-cta{background:linear-gradient(135deg,var(--s50),#eef2ff);padding:16px;border-radius:16px;border:1px solid var(--s200);display:flex;gap:12px;align-items:flex-start}
+.photo-cta .ic{font-size:24px}
+.photo-cta h3{font-size:14px;font-weight:700}
+.photo-cta p{font-size:12px;color:var(--sl600);margin-top:2px;line-height:1.5}
+.btn-sky{margin-top:10px;width:100%;padding:8px 12px;background:var(--s600);color:#fff;font-weight:600;font-size:12px;border-radius:12px;box-shadow:0 2px 4px rgba(2,132,199,.25);transition:background .2s}
+.btn-sky:hover{background:var(--s700)}
+
+/* Açılır çekmece (sabit modal yerine; Google Sites iframe'inde kesilmez) */
+.drawer{display:none;border:1px solid var(--o100);border-radius:18px;overflow:hidden;background:#fff}
+.drawer.open{display:block;animation:fadeIn .2s}
+.drawer-head{padding:12px 14px;background:linear-gradient(90deg,var(--o50),var(--s50));border-bottom:1px solid var(--sl200);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.drawer-head b{font-family:'Fredoka','Inter',sans-serif;font-size:15px}
+.drawer-head small{display:block;font-size:11px;color:var(--sl500)}
+.icon-close{width:30px;height:30px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.1);font-size:14px;color:var(--sl600);flex-shrink:0}
+.icon-close:hover{background:var(--sl100)}
+.drawer-list{padding:12px;max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.p-row{display:flex;align-items:center;gap:8px;padding:8px;border-radius:14px;background:var(--sl50);border:1px solid rgba(226,232,240,.8)}
+.p-val{min-width:38px;text-align:center;font-weight:700;font-size:11px;background:var(--o100);color:var(--o800);padding:4px 2px;border-radius:8px}
+.p-prev{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:var(--a100);display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden}
+.p-prev.has-img{border:2px solid var(--o400)}
+.p-prev img{width:100%;height:100%;object-fit:cover}
+.p-name{flex:1;min-width:0;padding:6px 8px;font-size:12px;font-weight:600;border:1px solid var(--sl200);border-radius:8px;background:#fff;outline:none}
+.p-name:focus{border-color:var(--o400)}
+.p-upload{padding:6px 10px;background:var(--s100);color:var(--s800);font-weight:600;font-size:11px;border-radius:10px;cursor:pointer;white-space:nowrap}
+.p-upload:hover{background:var(--s200)}
+.p-upload input{display:none}
+.p-remove{width:26px;height:26px;border-radius:8px;color:var(--rose);font-size:13px;flex-shrink:0}
+.p-remove:hover{background:#fff1f2}
+.drawer-foot{padding:10px 14px;background:var(--sl50);border-top:1px solid var(--sl200);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.btn-ghost-danger{padding:8px 12px;font-size:12px;font-weight:600;color:var(--rose);border-radius:12px}
+.btn-ghost-danger:hover{background:#fff1f2}
+.btn-primary{padding:8px 18px;background:linear-gradient(90deg,var(--o500),var(--a500));color:#fff;font-weight:700;font-size:13px;border-radius:12px;box-shadow:0 2px 6px rgba(249,115,22,.3)}
+.btn-primary:hover{opacity:.95}
+
+/* ---------- EVRİM REHBERİ ---------- */
+.legend-wrap{border-top:1px solid var(--sl100);padding-top:12px}
+.legend-head{display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--sl500);text-transform:uppercase;margin-bottom:8px}
+.legend-head span:last-child{font-weight:400;text-transform:none;color:var(--sl400)}
+.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px;max-height:176px;overflow-y:auto;padding-right:4px}
+.lg-item{display:flex;align-items:center;gap:6px;background:var(--sl50);border:1px solid rgba(226,232,240,.8);border-radius:12px;padding:6px;min-width:0}
+.lg-item img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1px solid var(--o400);flex-shrink:0}
+.lg-emoji{font-size:16px;flex-shrink:0}
+.lg-text{min-width:0}
+.lg-val{font-size:10px;font-weight:700;color:var(--sl400);line-height:1}
+.lg-name{font-size:11px;font-weight:600;color:var(--sl700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- 2048 TAHTASI ---------- */
+.board-col{display:flex;flex-direction:column;align-items:center}
+.board-wrap{width:100%;max-width:420px}
+.board-frame{position:relative}
+.board{
+  width:100%;aspect-ratio:1/1;
+  background:var(--sl300);border-radius:16px;padding:10px;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:10px;
+  touch-action:none;user-select:none;-webkit-user-select:none;outline:none;
+  box-shadow:inset 0 4px 6px -1px rgba(0,0,0,.1),0 10px 25px -5px rgba(234,88,12,.15);
+  container-type:inline-size;
+}
+.board:focus-visible{box-shadow:inset 0 4px 6px -1px rgba(0,0,0,.1),0 0 0 3px var(--o200)}
+@media(max-width:400px){.board{gap:7px;padding:7px}}
+.tile{border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;min-width:0;min-height:0;text-align:center;padding:3px;box-shadow:0 1px 2px rgba(0,0,0,.06);transition:background-color .15s}
+.tile-num{position:absolute;top:3px;left:5px;font-size:10px;font-weight:700;opacity:.75;line-height:1}
+.tile-num.chip{opacity:1;background:rgba(255,255,255,.85);color:var(--sl800);padding:1px 4px;border-radius:4px}
+.tile-emoji{font-size:26px;font-size:clamp(18px,7.2cqi,32px);line-height:1;margin-top:4px}
+.tile-label{font-size:10px;font-size:clamp(8px,2.6cqi,11px);font-weight:700;line-height:1.15;margin-top:4px;max-width:100%;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile-label.chip{background:rgba(255,255,255,.8);color:#0f172a;border-radius:4px;margin-top:2px}
+.tile-photo{width:48%;max-height:52%;aspect-ratio:1/1;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.15);margin-top:6px}
+
+@keyframes popIn{0%{transform:scale(.5);opacity:0}80%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.pop{animation:popIn .2s ease-out both}
+
+.tile-0{background:#e2e8f0;box-shadow:none}
+.tile-2{background:#fef3c7;color:#92400e;border:2px solid #fde68a}
+.tile-4{background:#fde68a;color:#92400e;border:2px solid #fcd34d}
+.tile-8{background:#fed7aa;color:#9a3412;border:2px solid #fdba74}
+.tile-16{background:#fdba74;color:#7c2d12;border:2px solid #fb923c}
+.tile-32{background:#bae6fd;color:#075985;border:2px solid #7dd3fc}
+.tile-64{background:#7dd3fc;color:#0c4a6e;border:2px solid #38bdf8}
+.tile-128{background:#a7f3d0;color:#065f46;border:2px solid #6ee7b7}
+.tile-256{background:#c7d2fe;color:#3730a3;border:2px solid #a5b4fc}
+.tile-512{background:#fbcfe8;color:#831843;border:2px solid #f9a8d4}
+.tile-1024{background:#fde047;color:#713f12;border:2px solid #facc15;box-shadow:0 0 12px rgba(250,204,21,.6)}
+.tile-2048{background:linear-gradient(135deg,#f59e0b,#ec4899);color:#fff;border:2px solid #fbbf24;box-shadow:0 0 18px rgba(236,72,153,.7)}
+
+/* Oyun bitti katmanı (tahtanın üstünde) */
+.overlay{position:absolute;inset:0;border-radius:16px;background:rgba(255,251,235,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;padding:16px;z-index:5}
+.overlay.show{display:flex;animation:fadeIn .25s}
+.overlay-card{background:#fff;border:2px solid var(--o200);border-radius:18px;padding:18px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,.12);max-width:290px}
+.overlay-card h3{font-size:20px;font-weight:700;color:var(--o600)}
+.overlay-card p{font-size:13px;color:var(--sl600);margin:6px 0 12px}
+
+/* Yön tuşları */
+.controls{margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.8);padding:12px 16px;border-radius:16px;border:1px solid var(--o100);font-size:12px;color:var(--sl600)}
+.hint{display:flex;align-items:center;gap:8px;flex:1;min-width:180px}
+.hint .ic{font-size:18px}
+.dpad{display:flex;align-items:center;gap:4px}
+.dpad-col{display:flex;flex-direction:column;gap:4px}
+.dbtn{width:38px;height:38px;border-radius:10px;background:var(--sl100);color:var(--sl700);font-weight:700;font-size:16px;box-shadow:0 1px 2px rgba(0,0,0,.06);transition:all .15s;display:flex;align-items:center;justify-content:center}
+.dbtn:hover{background:var(--o100)}
+.dbtn:active{transform:scale(.94)}
+
+/* ---------- KAHVE FALI ---------- */
+.intro p{font-size:12px;color:var(--sl500);margin-top:2px}
+.field-lbl{display:block;font-size:11px;font-weight:700;color:var(--sl700);text-transform:uppercase;margin-bottom:8px}
+.text-in{width:100%;padding:10px 14px;border-radius:12px;border:1px solid var(--sl200);font-size:14px;outline:none;transition:all .2s;background:#fff}
+.text-in:focus{border-color:var(--o400);box-shadow:0 0 0 3px var(--o100)}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.drink{padding:12px;border-radius:16px;border:2px solid var(--sl100);background:var(--sl50);font-weight:600;font-size:12px;display:flex;align-items:center;gap:10px;text-align:left;transition:all .2s;color:var(--sl700)}
+.drink .ic{font-size:24px;flex-shrink:0}
+.drink small{display:block;font-size:10px;color:var(--sl500);font-weight:400}
+.moods{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mood{padding:10px;border-radius:12px;border:2px solid var(--sl100);background:var(--sl50);font-weight:600;font-size:12px;display:flex;align-items:center;gap:8px;text-align:left;color:var(--sl700);transition:all .2s}
+.mood .ic{font-size:20px;flex-shrink:0}
+.drink:hover,.mood:hover{background:var(--sl100)}
+.drink.selected,.mood.selected{border-color:var(--o500);background:rgba(255,247,237,.7);color:#431407}
+@media(max-width:380px){.chips,.moods{grid-template-columns:1fr}}
+.btn-big{width:100%;padding:14px;background:linear-gradient(90deg,var(--o500),var(--a500),var(--o600));color:#fff;font-weight:700;font-size:16px;border-radius:16px;box-shadow:0 10px 15px -3px rgba(254,215,170,.9);display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s}
+.btn-big:active{transform:scale(.98)}
+.btn-big:disabled{opacity:.75;cursor:wait}
+
+.right-col{display:flex;flex-direction:column;gap:20px}
+.waiting{background:#fff;border-radius:24px;padding:32px;border:1px solid var(--o100);box-shadow:0 4px 14px rgba(15,23,42,.05);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:380px}
+.waiting.hide{display:none}
+.cup-circle{width:96px;height:96px;border-radius:50%;background:var(--a50);border:2px solid var(--a200);display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:16px;box-shadow:inset 0 2px 4px rgba(0,0,0,.06)}
+.waiting h3{font-size:20px;font-weight:700}
+.waiting p{font-size:14px;color:var(--sl500);max-width:420px;margin-top:8px}
+@keyframes cupShake{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-15deg) scale(1.1)}40%{transform:rotate(15deg) scale(1.15)}60%{transform:rotate(-12deg) scale(1.15)}80%{transform:rotate(12deg) scale(1.1)}}
+.shaking{animation:cupShake .6s infinite ease-in-out}
+
+.result{display:none;background:#fff;border-radius:24px;padding:24px;border:1px solid var(--o200);box-shadow:0 4px 14px rgba(15,23,42,.05);flex-direction:column;gap:20px;position:relative;overflow:hidden}
+.result.show{display:flex;animation:fadeIn .25s}
+.res-deco{position:absolute;right:-24px;top:-24px;font-size:96px;opacity:.1;pointer-events:none}
+.res-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--o100);padding-bottom:16px}
+.res-left{display:flex;align-items:center;gap:12px}
+.res-icon{width:48px;height:48px;border-radius:16px;background:var(--o100);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.res-badge{font-size:11px;font-weight:700;color:var(--o600);text-transform:uppercase;letter-spacing:.04em}
+.res-title{font-size:20px;font-weight:700}
+.mood-tag{font-size:12px;font-weight:600;background:var(--s50);color:var(--s800);border:1px solid var(--s200);padding:6px 12px;border-radius:99px}
+.quote{background:linear-gradient(135deg,rgba(255,251,235,.9),rgba(255,247,237,.6));border:1px solid rgba(253,230,138,.8);border-radius:16px;padding:20px 20px 20px 34px;position:relative}
+.quote::before{content:'“';position:absolute;top:2px;left:12px;font-size:40px;font-family:Georgia,serif;color:rgba(146,64,14,.3)}
+.quote p{font-size:15px;line-height:1.6;font-weight:500}
+.energy-title{font-size:11px;font-weight:700;color:var(--sl500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.energy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:560px){.energy{grid-template-columns:1fr}}
+.e-card{background:var(--sl50);padding:14px;border-radius:16px;border:1px solid rgba(226,232,240,.8);display:flex;align-items:center;gap:12px;min-width:0}
+.e-card .ic{font-size:28px;flex-shrink:0}
+.e-lbl{font-size:10px;font-weight:600;color:var(--sl400);text-transform:uppercase}
+.e-val{font-size:12px;font-weight:700}
+.e-val.green{color:var(--em700)}
+.res-actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn-green{flex:1;min-width:200px;padding:12px 16px;background:var(--em600);color:#fff;font-weight:600;border-radius:12px;font-size:14px;box-shadow:0 2px 4px rgba(5,150,105,.25)}
+.btn-green:hover{background:var(--em700)}
+
+/* ---------- BİLDİRİM ---------- */
+.toast{position:fixed;bottom:20px;right:20px;z-index:50;background:#0f172a;color:#fff;padding:12px 16px;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;transform:translateY(80px);opacity:0;pointer-events:none;transition:all .3s;max-width:calc(100% - 40px)}
+.toast.show{transform:none;opacity:1}
+.toast .ic{font-size:20px}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ÜST BİLGİ -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🐥</div>
+      <div>
+        <h1 class="grad-text">ABL Foods • İK Mola Merkezi</h1>
+        <p class="sub">Kahveni al, 5 dakika nefeslen, enerjini tazele! ☕🐟</p>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button id="tabBtn2048" class="tab" onclick="switchTab('2048')">🐥 ABL 2048 🐟</button>
+      <button id="tabBtnFortune" class="tab active" onclick="switchTab('fortune')">☕ İK Kahve Falı & Mod</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ==================== SEKME 1: 2048 ==================== -->
+    <section id="section2048" class="view">
+      <div class="layout">
+
+        <!-- Sol panel -->
+        <div class="panel">
+          <div class="row-between">
+            <div>
+              <span class="badge">Mini Oyun</span>
+              <h2>ABL 2048 Evrimi</h2>
+            </div>
+            <button class="btn-soft" onclick="resetGame()">⟳ Yeniden</button>
+          </div>
+
+          <div class="scores">
+            <div class="score-card amber">
+              <div class="score-lbl">Skor</div>
+              <div id="currentScore" class="score-val">0</div>
+            </div>
+            <div class="score-card sky">
+              <div class="score-lbl">En Yüksek</div>
+              <div id="bestScore" class="score-val">0</div>
+            </div>
+          </div>
+
+          <div class="box">
+            <span class="box-lbl">🎨 Oyun Teması Seçin:</span>
+            <button class="theme-opt active" data-theme="civciv_balik" onclick="setGameTheme('civciv_balik')">
+              <span>🐣 Civciv & Balık Evrimi</span><span class="check"></span>
+            </button>
+            <button class="theme-opt" data-theme="ik_kariyer" onclick="setGameTheme('ik_kariyer')">
+              <span>💼 İK Kariyer Basamakları</span><span class="check"></span>
+            </button>
+          </div>
+
+          <div class="photo-cta">
+            <div class="ic">📸</div>
+            <div style="flex:1">
+              <h3>Ekip Fotoğraflarıyla Oyna!</h3>
+              <p>Taşların üzerine İK ekibindeki arkadaşlarınızın fotoğraflarını ve isimlerini koyarak oyunu kişiselleştirin!</p>
+              <button class="btn-sky" onclick="togglePhotoDrawer()">📷 Ekip Fotoğraflarıyla Özelleştir</button>
+            </div>
+          </div>
+
+          <!-- Özelleştirme çekmecesi -->
+          <div id="photoDrawer" class="drawer">
+            <div class="drawer-head">
+              <div>
+                <b>📸 Taşları Özelleştir</b>
+                <small>İsim yazın veya fotoğraf seçin; taşlarda anında görünür.</small>
+              </div>
+              <button class="icon-close" onclick="togglePhotoDrawer(false)" title="Kapat">✕</button>
+            </div>
+            <div id="photoCustomizationList" class="drawer-list"></div>
+            <div class="drawer-foot">
+              <button class="btn-ghost-danger" onclick="clearAllCustomPhotos()">🗑️ Tümünü Sıfırla</button>
+              <button class="btn-primary" onclick="togglePhotoDrawer(false)">Kaydet ve Oyuna Dön</button>
+            </div>
+          </div>
+
+          <div class="legend-wrap">
+            <div class="legend-head"><span>🔍 Evrim Sıralaması</span><span>2 ➔ 2048</span></div>
+            <div id="evolutionLegend" class="legend"></div>
+          </div>
+        </div>
+
+        <!-- Sağ panel: tahta -->
+        <div class="board-col">
+          <div class="board-wrap">
+            <div class="board-frame">
+              <div id="boardContainer" class="board" tabindex="0" aria-label="2048 oyun tahtası"></div>
+              <div id="gameOverModal" class="overlay">
+                <div class="overlay-card">
+                  <h3>Mola Bitti! ☕</h3>
+                  <p id="gameOverMsg">Harika yarıştın!</p>
+                  <button class="btn-primary" onclick="resetGame()">Yeni Oyun Başlat</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="controls">
+              <div class="hint">
+                <span class="ic">⌨️</span>
+                <span><b>Yön Tuşları</b>, <b>W-A-S-D</b> veya parmağınızla <b>kaydırarak</b> aynı taşları birleştirin!</span>
+              </div>
+              <div class="dpad">
+                <button class="dbtn" onclick="handleMove('LEFT')" title="Sol">←</button>
+                <div class="dpad-col">
+                  <button class="dbtn" onclick="handleMove('UP')" title="Yukarı">↑</button>
+                  <button class="dbtn" onclick="handleMove('DOWN')" title="Aşağı">↓</button>
+                </div>
+                <button class="dbtn" onclick="handleMove('RIGHT')" title="Sağ">→</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SEKME 2: KAHVE FALI ==================== -->
+    <section id="sectionFortune" class="view active">
+      <div class="layout">
+
+        <div class="panel">
+          <div class="intro">
+            <span class="badge amber">Mola Ritüeli</span>
+            <h2>İK Kahve Falı & Modun ☕</h2>
+            <p>Bugünkü içeceğini ve ruh halini seç, ABL Foods falcısı fincanını yorumlasın!</p>
+          </div>
+
+          <div>
+            <label class="field-lbl" for="colleagueNameInput">👤 Adın veya Lakabın (İsteğe Bağlı)</label>
+            <input id="colleagueNameInput" class="text-in" type="text" maxlength="40" placeholder="Örn: Ayşe, Bordro Kraliçesi, İK'nın Civcivi...">
+          </div>
+
+          <div>
+            <span class="field-lbl">☕ Bugün Masanda Ne Var?</span>
+            <div class="chips">
+              <button class="drink selected" data-name="Türk Kahvesi" data-emoji="☕" onclick="selectDrink(this)">
+                <span class="ic">☕</span><span>Türk Kahvesi<small>Bol köpüklü & telveli</small></span>
+              </button>
+              <button class="drink" data-name="Filtre Kahve" data-emoji="🧋" onclick="selectDrink(this)">
+                <span class="ic">🧋</span><span>Filtre Kahve<small>Ayıltıcı & odaklayıcı</small></span>
+              </button>
+              <button class="drink" data-name="Tavşan Kanı Çay" data-emoji="🫖" onclick="selectDrink(this)">
+                <span class="ic">🫖</span><span>Tavşan Kanı Çay<small>Ofis klasiği & samimi</small></span>
+              </button>
+              <button class="drink" data-name="Papatya Çayı" data-emoji="🌼" onclick="selectDrink(this)">
+                <span class="ic">🌼</span><span>Papatya Çayı<small>Sakinlik & zen modu</small></span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <span class="field-lbl">🎭 Şu Anki İK Modun Hangisi?</span>
+            <div class="moods">
+              <button class="mood selected" data-name="Pazartesi Sendromlu Civciv" data-emoji="🐣" onclick="selectMood(this)"><span class="ic">🐣</span>Pazartesi Sendromlu</button>
+              <button class="mood" data-name="Mülakat Canavarı Köpekbalığı" data-emoji="🦈" onclick="selectMood(this)"><span class="ic">🦈</span>Mülakat Canavarı</button>
+              <button class="mood" data-name="Sessizce Yüzen Balık" data-emoji="🐟" onclick="selectMood(this)"><span class="ic">🐟</span>Sessizce Yüzüyorum</button>
+              <button class="mood" data-name="Cuma Neşeli Sarı Civciv" data-emoji="🐥" onclick="selectMood(this)"><span class="ic">🐥</span>Cuma Neşesi Modu</button>
+              <button class="mood" data-name="Evrak Denizinde Boğulan Balon Balığı" data-emoji="🐡" onclick="selectMood(this)"><span class="ic">🐡</span>Evraklarda Boğuluyorum</button>
+              <button class="mood" data-name="Tatlı Krizine Girmiş Tropikal Balık" data-emoji="🐠" onclick="selectMood(this)"><span class="ic">🐠</span>Acil Tatlı Lazım!</button>
+            </div>
+          </div>
+
+          <button id="readFortuneBtn" class="btn-big" onclick="generateFortune()">
+            <span>☕</span><span>Fincanı Kapat & Falıma Bak!</span>
+          </button>
+        </div>
+
+        <div class="right-col">
+          <div id="fortuneWaitingBox" class="waiting">
+            <div id="waitingCupEmoji" class="cup-circle">☕</div>
+            <h3 id="waitingTitle">Niyetini Tut, Fincanını Kapat!</h3>
+            <p id="waitingSubtitle">İçeceğini ve bugünkü İK modunu seçip butona tıkla. Bakalım telvelerin arasından sana hangi civciv veya balık göz kırpacak? 🐥🐟</p>
+          </div>
+
+          <div id="fortuneResultBox" class="result">
+            <div class="res-deco">🐥</div>
+            <div class="res-head">
+              <div class="res-left">
+                <div id="resDrinkEmoji" class="res-icon">☕</div>
+                <div>
+                  <div class="res-badge">ABL Foods Fal Köşesi</div>
+                  <h3 id="resTitle" class="res-title">Fincanında Kısmet Var!</h3>
+                </div>
+              </div>
+              <span id="resMoodTag" class="mood-tag">🐣 Pazartesi Sendromlu</span>
+            </div>
+
+            <div class="quote"><p id="resFortuneText"></p></div>
+
+            <div>
+              <div class="energy-title">✨ Günün İK Enerji Kartı</div>
+              <div class="energy">
+                <div class="e-card">
+                  <div id="cardAnimalEmoji" class="ic">🐥</div>
+                  <div><div class="e-lbl">Ruh Hayvanın</div><div id="cardAnimalName" class="e-val">Enerjik Sarı Civciv</div></div>
+                </div>
+                <div class="e-card">
+                  <div id="cardSnackEmoji" class="ic">🥐</div>
+                  <div><div class="e-lbl">Şanslı Atıştırmalığın</div><div id="cardSnackName" class="e-val">Sıcak Kruvasan</div></div>
+                </div>
+                <div class="e-card">
+                  <div class="ic">🛡️</div>
+                  <div><div class="e-lbl">Stres Kalkanı</div><div id="cardShieldLevel" class="e-val green">%95 Tam Koruma</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="res-actions">
+              <button class="btn-green" onclick="copyFortuneToClipboard()">📋 Falımı Kopyala (Teams / WhatsApp)</button>
+              <button class="btn-soft lg" onclick="generateFortune()">🔄 Başka Niyet Tut</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toastNotification" class="toast"><span id="toastEmoji" class="ic">✨</span><span id="toastMessage"></span></div>
+
+<script>
+/* =========================================================
+   1. TEMA VERİLERİ (yazı ve emojileri buradan değiştirebilirsiniz)
+   ========================================================= */
+const THEMES = {
+  civciv_balik: {
+    2:{emoji:"🥚",label:"Yumurta"}, 4:{emoji:"🐣",label:"Çatlayan Civciv"}, 8:{emoji:"🐥",label:"Minik Civciv"},
+    16:{emoji:"🐤",label:"Sarı Civciv"}, 32:{emoji:"🐟",label:"Küçük Balık"}, 64:{emoji:"🐠",label:"Tropikal Balık"},
+    128:{emoji:"🐡",label:"Balon Balığı"}, 256:{emoji:"🦈",label:"Köpekbalığı"}, 512:{emoji:"🐳",label:"Balina"},
+    1024:{emoji:"🧜‍♀️",label:"Deniz Kızı/Kralı"}, 2048:{emoji:"👑",label:"ABL Efsanesi"}
+  },
+  ik_kariyer: {
+    2:{emoji:"☕",label:"Kahve Molası"}, 4:{emoji:"📄",label:"CV İnceleme"}, 8:{emoji:"🤝",label:"Mülakat"},
+    16:{emoji:"🎉",label:"Oryantasyon"}, 32:{emoji:"🐣",label:"İK Stajyeri"}, 64:{emoji:"🐥",label:"İK Uzmanı"},
+    128:{emoji:"🐟",label:"Kıdemli İK"}, 256:{emoji:"🐠",label:"İK Yöneticisi"}, 512:{emoji:"📊",label:"Bordro Şampiyonu"},
+    1024:{emoji:"🏆",label:"Kültür Elçisi"}, 2048:{emoji:"👑",label:"İK Direktörü"}
+  }
+};
+const LEVELS = [2,4,8,16,32,64,128,256,512,1024,2048];
+
+/* =========================================================
+   2. YARDIMCILAR (stabilite katmanı)
+   ========================================================= */
+const $ = id => document.getElementById(id);
+
+// localStorage Google Sites iframe'inde engellenebilir: hata verirse sessizce geç
+const store = {
+  get(k){ try { return window.localStorage.getItem(k); } catch(e){ return null; } },
+  set(k,v){ try { window.localStorage.setItem(k,v); } catch(e){} }
+};
+
+// Kullanıcı yazısını HTML'e güvenle koymak için
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+let toastTimeout;
+function showToast(message, emoji){
+  $('toastMessage').textContent = message;
+  $('toastEmoji').textContent = emoji || '✨';
+  const t = $('toastNotification');
+  t.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+/* =========================================================
+   3. SEKMELER
+   ========================================================= */
+function switchTab(name){
+  const is2048 = name === '2048';
+  $('section2048').classList.toggle('active', is2048);
+  $('sectionFortune').classList.toggle('active', !is2048);
+  $('tabBtn2048').classList.toggle('active', is2048);
+  $('tabBtnFortune').classList.toggle('active', !is2048);
+}
+
+/* =========================================================
+   4. 2048 OYUNU
+   ========================================================= */
+let customTeamTiles = {};          // { 2: { imgUrl:'data:...', customName:'Ahmet' } }
+let currentThemeKey = 'civciv_balik';
+let board = emptyBoard();
+let score = 0;
+let bestScore = parseInt(store.get('abl_2048_best'), 10) || 0;
+let isGameOver = false;
+let hasWon2048 = false;
+
+function emptyBoard(){ return [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]; }
+
+function resetGame(){
+  board = emptyBoard();
+  score = 0;
+  isGameOver = false;
+  hasWon2048 = false;
+  $('currentScore').textContent = '0';
+  $('gameOverModal').classList.remove('show');
+  spawnRandomTile();
+  spawnRandomTile();
+  renderBoard();
+}
+
+function setGameTheme(key){
+  if (!THEMES[key]) return;
+  currentThemeKey = key;
+  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === key));
+  renderBoard();
+  renderEvolutionLegend();
+  if (drawerOpen) renderPhotoList();
+}
+
+function getTileDisplayInfo(val){
+  const base = THEMES[currentThemeKey][val] || { emoji:'✨', label:String(val) };
+  const c = customTeamTiles[val] || {};
+  return { emoji: base.emoji, label: c.customName || base.label, imgUrl: c.imgUrl || null };
+}
+
+function renderEvolutionLegend(){
+  const box = $('evolutionLegend');
+  box.innerHTML = LEVELS.map(val => {
+    const info = getTileDisplayInfo(val);
+    const visual = info.imgUrl
+      ? `<img src="${info.imgUrl}" alt="">`
+      : `<span class="lg-emoji">${info.emoji}</span>`;
+    return `<div class="lg-item">${visual}<div class="lg-text"><div class="lg-val">${val}</div><div class="lg-name">${esc(info.label)}</div></div></div>`;
+  }).join('');
+}
+
+function spawnRandomTile(){
+  const empty = [];
+  for (let r=0;r<4;r++) for (let c=0;c<4;c++) if (board[r][c]===0) empty.push({r,c});
+  if (!empty.length) return null;
+  const chosen = pick(empty);
+  board[chosen.r][chosen.c] = Math.random() < 0.9 ? 2 : 4;
+  return chosen;
+}
+
+function renderBoard(newPos){
+  const html = [];
+  for (let r=0;r<4;r++){
+    for (let c=0;c<4;c++){
+      const val = board[r][c];
+      const color = val === 0 ? 'tile-0' : (val <= 2048 ? `tile-${val}` : 'tile-2048');
+      const pop = newPos && newPos.r===r && newPos.c===c ? ' pop' : '';
+      let inner = '';
+      if (val > 0){
+        const info = getTileDisplayInfo(val);
+        inner = info.imgUrl
+          ? `<span class="tile-num chip">${val}</span><img class="tile-photo" src="${info.imgUrl}" alt=""><span class="tile-label chip">${esc(info.label)}</span>`
+          : `<span class="tile-num">${val}</span><div class="tile-emoji">${info.emoji}</div><div class="tile-label">${esc(info.label)}</div>`;
+      }
+      html.push(`<div class="tile ${color}${pop}">${inner}</div>`);
+    }
+  }
+  $('boardContainer').innerHTML = html.join('');
+}
+
+function slideAndMergeRow(row){
+  let arr = row.filter(v => v !== 0);
+  for (let i=0;i<arr.length-1;i++){
+    if (arr[i] === arr[i+1]){
+      arr[i] *= 2;
+      score += arr[i];
+      if (arr[i] === 2048 && !hasWon2048){
+        hasWon2048 = true;
+        showToast('🎉 Tebrikler! 2048 seviyesine ulaştın!', '👑');
+      }
+      arr[i+1] = 0;
+    }
+  }
+  arr = arr.filter(v => v !== 0);
+  while (arr.length < 4) arr.push(0);
+  return arr;
+}
+
+function rotateRight(m){
+  const res = emptyBoard();
+  for (let r=0;r<4;r++) for (let c=0;c<4;c++) res[c][3-r] = m[r][c];
+  return res;
+}
+
+function handleMove(dir){
+  if (isGameOver) return;
+  const before = JSON.stringify(board);
+
+  if (dir === 'LEFT'){
+    board = board.map(slideAndMergeRow);
+  } else if (dir === 'RIGHT'){
+    board = board.map(r => slideAndMergeRow(r.slice().reverse()).reverse());
+  } else if (dir === 'UP'){
+    board = rotateRight(rotateRight(rotateRight(board)));
+    board = board.map(slideAndMergeRow);
+    board = rotateRight(board);
+  } else if (dir === 'DOWN'){
+    board = rotateRight(board);
+    board = board.map(slideAndMergeRow);
+    board = rotateRight(rotateRight(rotateRight(board)));
+  }
+
+  if (JSON.stringify(board) !== before){
+    const spawned = spawnRandomTile();
+    $('currentScore').textContent = score;
+    if (score > bestScore){
+      bestScore = score;
+      store.set('abl_2048_best', bestScore);
+      $('bestScore').textContent = bestScore;
+    }
+    renderBoard(spawned);
+    checkGameOver();
+  }
+}
+
+function checkGameOver(){
+  for (let r=0;r<4;r++){
+    for (let c=0;c<4;c++){
+      if (board[r][c] === 0) return;
+      if (c<3 && board[r][c] === board[r][c+1]) return;
+      if (r<3 && board[r][c] === board[r+1][c]) return;
+    }
+  }
+  isGameOver = true;
+  $('gameOverMsg').textContent = `Toplam Skorun: ${score}. Kahveni tazeleyip bir el daha denemek ister misin?`;
+  $('gameOverModal').classList.add('show');
+}
+
+// Klavye (Google Sites'ta önce tahtaya bir kez tıklamak gerekir)
+const KEYMAP = { ArrowUp:'UP', KeyW:'UP', ArrowDown:'DOWN', KeyS:'DOWN', ArrowLeft:'LEFT', KeyA:'LEFT', ArrowRight:'RIGHT', KeyD:'RIGHT' };
+window.addEventListener('keydown', e => {
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (!$('section2048').classList.contains('active')) return;
+  const dir = KEYMAP[e.code] || KEYMAP[e.key];
+  if (!dir) return;
+  e.preventDefault();
+  handleMove(dir);
+});
+
+const boardEl = $('boardContainer');
+boardEl.addEventListener('mousedown', () => { try { boardEl.focus({preventScroll:true}); } catch(e){} });
+
+// Dokunmatik kaydırma
+let touchStartX = 0, touchStartY = 0;
+boardEl.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].clientX;
+  touchStartY = e.changedTouches[0].clientY;
+}, { passive:true });
+boardEl.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < 25) return;
+  if (Math.abs(dx) > Math.abs(dy)) handleMove(dx > 0 ? 'RIGHT' : 'LEFT');
+  else handleMove(dy > 0 ? 'DOWN' : 'UP');
+}, { passive:true });
+
+/* =========================================================
+   5. EKİP FOTOĞRAFLARI
+   ========================================================= */
+let drawerOpen = false;
+
+function togglePhotoDrawer(force){
+  drawerOpen = (typeof force === 'boolean') ? force : !drawerOpen;
+  $('photoDrawer').classList.toggle('open', drawerOpen);
+  if (drawerOpen) renderPhotoList();
+  renderBoard();
+  renderEvolutionLegend();
+}
+
+function renderPhotoList(){
+  $('photoCustomizationList').innerHTML = LEVELS.map(val => {
+    const def = THEMES[currentThemeKey][val];
+    const custom = customTeamTiles[val] || {};
+    const prev = custom.imgUrl
+      ? `<div class="p-prev has-img"><img src="${custom.imgUrl}" alt=""></div>`
+      : `<div class="p-prev">${def.emoji}</div>`;
+    const removeBtn = (custom.imgUrl || custom.customName)
+      ? `<button class="p-remove" onclick="removeSinglePhoto(${val})" title="Sıfırla">✕</button>` : '';
+    return `<div class="p-row">
+        <div class="p-val">${val}</div>
+        ${prev}
+        <input class="p-name" type="text" maxlength="24" value="${esc(custom.customName || '')}" placeholder="${esc(def.label)}" oninput="updateCustomName(${val}, this.value)">
+        <label class="p-upload">📷 Foto<input type="file" accept="image/*" onchange="handlePhotoUpload(${val}, this)"></label>
+        ${removeBtn}
+      </div>`;
+  }).join('');
+}
+
+// Fotoğrafı küçültüp kare kırpar (bellek dostu, iframe'de stabil)
+function shrinkImage(src, size){
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const s = Math.min(img.width, img.height);
+        const cv = document.createElement('canvas');
+        cv.width = cv.height = size;
+        cv.getContext('2d').drawImage(img, (img.width-s)/2, (img.height-s)/2, s, s, 0, 0, size, size);
+        resolve(cv.toDataURL('image/jpeg', 0.85));
+      } catch(e){ resolve(src); }
+    };
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+function handlePhotoUpload(val, input){
+  const file = input.files && input.files[0];
+  if (!file) return;
+  if (file.type && !/^image\//.test(file.type)){
+    showToast('Lütfen bir görsel dosyası seçin.', '⚠️');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    shrinkImage(e.target.result, 160).then(url => {
+      if (!url){ showToast('Bu görsel açılamadı, JPG veya PNG deneyin.', '⚠️'); return; }
+      if (!customTeamTiles[val]) customTeamTiles[val] = {};
+      customTeamTiles[val].imgUrl = url;
+      if (!customTeamTiles[val].customName){
+        customTeamTiles[val].customName = file.name.replace(/\.[^/.]+$/, '').substring(0, 18);
+      }
+      renderPhotoList();
+      renderBoard();
+      renderEvolutionLegend();
+      showToast(`${val} puanlık taşa fotoğraf eklendi!`, '📸');
+    });
+  };
+  reader.onerror = () => showToast('Fotoğraf okunamadı, başka bir dosya deneyin.', '⚠️');
+  reader.readAsDataURL(file);
+}
+
+function updateCustomName(val, name){
+  if (!customTeamTiles[val]) customTeamTiles[val] = {};
+  customTeamTiles[val].customName = name.trim();
+  renderBoard();
+  renderEvolutionLegend();
+}
+
+function removeSinglePhoto(val){
+  delete customTeamTiles[val];
+  renderPhotoList();
+  renderBoard();
+  renderEvolutionLegend();
+}
+
+function clearAllCustomPhotos(){
+  customTeamTiles = {};
+  renderPhotoList();
+  renderBoard();
+  renderEvolutionLegend();
+  showToast('Tüm özel fotoğraflar sıfırlandı.', '🧹');
+}
+
+/* =========================================================
+   6. İK KAHVE FALI
+   ========================================================= */
+let selectedDrink = { name:'Türk Kahvesi', emoji:'☕' };
+let selectedMood  = { name:'Pazartesi Sendromlu Civciv', emoji:'🐣' };
+let lastGeneratedShareText = '';
+let fortuneTimer = null;
+
+const HR_FORTUNES = [
+  "Fincanın dibinde kocaman bir balık 🐟 belirdi! Bu hafta beklediğin o zorlu pozisyonun en parlak adayı kendi kendine oltaya takılıyor, kısmetin sonuna kadar açık!",
+  "Fincanın kenarında zıplayan neşeli bir civciv 🐥 var: Öğleden sonra saat 3 civarı ansızın gelen tatlı krizine yenik düşeceksin, mutfağa uğrayıp kendine bir ödül ver!",
+  "Üç vakte kadar takvimindeki o en uzun ve gereksiz görünen toplantı 'Arkadaşlar bunu maille çözelim' denilerek iptal olacak. Derin bir nefes al! 😌",
+  "Telvelerin arasında kanat çırpan minik bir sarı civciv 🐣 görünüyor: Bugün gelen kutuna düşecek bir teşekkür mesajı tüm haftanın yorgunluğunu bir anda silecek!",
+  "Fincanın tam ortasında okyanusta süzülen bir tropikal balık 🐠 var: Üzerinde çalıştığın o karmaşık Excel tablosu veya rapor tek seferde hatasız tamamlanacak!",
+  "Kahve köpüğünde iki balık 🐟🐟 kafa kafaya vermiş: Bugün İK ekibinden bir arkadaşınla yapacağın 10 dakikalık kahve sohbeti sana harika bir proje fikri verecek!",
+  "Fincanın ağzında tacı olan bir civciv 👑🐥 duruyor: Mülakatlarda altıncı hissin bugün zirvede! Adayın CV'sine bakar bakmaz ne diyeceğini şıp diye anlayacaksın.",
+  "Tabağın kenarından süzülen yol gösteriyor ki; bugün 'Acil!' başlığıyla gelen o iş aslında hiç de acil değilmiş. Balık gibi sakin kalıp akışına bırak! 🌊🐟",
+  "Fincanın altında bir kahve fincanı daha belirdi ☕: Bugün bir ekip arkadaşın masana sürpriz bir kahve veya atıştırmalık bırakabilir, şanslı günündesin!",
+  "Yumurtadan yeni çıkan enerjik bir civciv 🐣 sana göz kırpıyor: Ertelediğin o telefon görüşmesini bugün aradan çıkarırsan Cuma gününe kuş gibi hafif gireceksin!"
+];
+const SPIRIT_ANIMALS = [
+  {emoji:"🐥",name:"Enerjik Sarı Civciv"},{emoji:"🐟",name:"Akışta Yüzen Bilge Balık"},
+  {emoji:"🐠",name:"Renkli Tropikal Balık"},{emoji:"🐣",name:"Meraklı Minik Civciv"},
+  {emoji:"🦈",name:"Yetenek Avcısı Köpekbalığı"},{emoji:"🐳",name:"Huzurlu Mavi Balina"},
+  {emoji:"🐡",name:"Tatil Hayali Kuran Balon Balığı"}
+];
+const LUCKY_SNACKS = [
+  {emoji:"🥐",name:"Taze Sıcak Kruvasan"},{emoji:"🍫",name:"Bitter Çikolata Karesi"},
+  {emoji:"🍪",name:"Damla Çikolatalı Kurabiye"},{emoji:"🥨",name:"Çıtır Susamlı Simit"},
+  {emoji:"🍓",name:"Meyve Tabağı Molası"},{emoji:"🧁",name:"Tarçınlı Havuçlu Kek"}
+];
+const SHIELD_LEVELS = [
+  "%98 • Pazartesiye Tam Bağışıklık","%100 • Acil Maillere Görünmezlik",
+  "%92 • Tatlı Dil & Güler Yüz Zırhı","%95 • Sonsuz Sabır & Zen Kalkanı","%99 • Cuma Neşesi Koruması"
+];
+
+function selectDrink(btn){
+  selectedDrink = { name: btn.dataset.name, emoji: btn.dataset.emoji };
+  document.querySelectorAll('.drink').forEach(b => b.classList.toggle('selected', b === btn));
+  $('waitingCupEmoji').textContent = selectedDrink.emoji;
+}
+
+function selectMood(btn){
+  selectedMood = { name: btn.dataset.name, emoji: btn.dataset.emoji };
+  document.querySelectorAll('.mood').forEach(b => b.classList.toggle('selected', b === btn));
+}
+
+function generateFortune(){
+  const waiting = $('fortuneWaitingBox');
+  const result = $('fortuneResultBox');
+  const cup = $('waitingCupEmoji');
+  const btn = $('readFortuneBtn');
+
+  clearTimeout(fortuneTimer);           // art arda tıklamalarda çakışmayı önler
+  btn.disabled = true;
+  result.classList.remove('show');
+  waiting.classList.remove('hide');
+  cup.textContent = selectedDrink.emoji;
+  cup.classList.add('shaking');
+  $('waitingTitle').textContent = 'Fincan soğuyor, şekiller beliriyor... 🔍';
+  $('waitingSubtitle').textContent = 'ABL Foods falcısı civcivlerin ve balıkların dilini çözümlüyor...';
+
+  fortuneTimer = setTimeout(() => {
+    cup.classList.remove('shaking');
+    waiting.classList.add('hide');
+    btn.disabled = false;
+
+    const name = $('colleagueNameInput').value.trim();
+    const greeting = name ? `Sevgili ${name},` : 'Sevgili İK Kahramanı,';
+    const fortune = pick(HR_FORTUNES);
+    const animal = pick(SPIRIT_ANIMALS);
+    const snack = pick(LUCKY_SNACKS);
+    const shield = pick(SHIELD_LEVELS);
+
+    $('resDrinkEmoji').textContent = selectedDrink.emoji;
+    $('resTitle').textContent = name ? `${name} İçin ${selectedDrink.name} Falı` : `Günün ${selectedDrink.name} Falı`;
+    $('resMoodTag').textContent = `${selectedMood.emoji} ${selectedMood.name}`;
+    $('resFortuneText').textContent = `${greeting} ${fortune}`;
+    $('cardAnimalEmoji').textContent = animal.emoji;
+    $('cardAnimalName').textContent = animal.name;
+    $('cardSnackEmoji').textContent = snack.emoji;
+    $('cardSnackName').textContent = snack.name;
+    $('cardShieldLevel').textContent = shield;
+
+    lastGeneratedShareText =
+      `🐥 *ABL Foods - İK Mola Falım* 🐟\n` +
+      `☕ *İçecek:* ${selectedDrink.emoji} ${selectedDrink.name}\n` +
+      `🎭 *Günün Modu:* ${selectedMood.emoji} ${selectedMood.name}\n\n` +
+      `🔮 *Fal Yorumu:* "${greeting} ${fortune}"\n\n` +
+      `✨ *Ruh Hayvanım:* ${animal.emoji} ${animal.name} | *Şanslı Atıştırmalık:* ${snack.emoji} ${snack.name}`;
+
+    result.classList.add('show');
+  }, 850);
+}
+
+// Pano: önce modern API, iframe izin vermezse eski yöntem
+function legacyCopy(text){
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  } catch(e){ return false; }
+}
+function copyFortuneToClipboard(){
+  if (!lastGeneratedShareText) return;
+  const ok = () => showToast('Falın kopyalandı! Teams veya WhatsApp grubuna yapıştırabilirsin 🎉', '📋');
+  const fail = () => showToast('Kopyalanamadı; metni seçip elle kopyalayabilirsin.', '⚠️');
+  const fallback = () => legacyCopy(lastGeneratedShareText) ? ok() : fail();
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(lastGeneratedShareText).then(ok).catch(fallback);
+  } else {
+    fallback();
+  }
+}
+
+/* =========================================================
+   7. BAŞLAT
+   ========================================================= */
+$('bestScore').textContent = bestScore;
+resetGame();
+renderEvolutionLegend();
+switchTab('fortune');   // 👈 açılışta fal sekmesi varsayılan
+</script>
+</body>
+</html>
