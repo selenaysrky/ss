@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABL Foods - İK Mola Merkezi 🐥🐟</title>
+<title>ABL İK Mola Vakti 🐥🐟</title>
 <!-- Yazı tipleri (yüklenemezse sistem fontuna düşer, sayfa bozulmaz) -->
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -203,6 +203,8 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
 .moods{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mood{padding:10px;border-radius:12px;border:2px solid var(--sl100);background:var(--sl50);font-weight:600;font-size:12px;display:flex;align-items:center;gap:8px;text-align:left;color:var(--sl700);transition:all .2s}
 .mood .ic{font-size:20px;flex-shrink:0}
+/* Mod sayısı tek olursa son kutu tüm satırı kaplasın */
+.mood:last-child:nth-child(odd){grid-column:1/-1}
 .drink:hover,.mood:hover{background:var(--sl100)}
 .drink.selected,.mood.selected{border-color:var(--o500);background:rgba(255,247,237,.7);color:#431407}
 @media(max-width:380px){.chips,.moods{grid-template-columns:1fr}}
@@ -227,7 +229,7 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
 .res-icon{width:48px;height:48px;border-radius:16px;background:var(--o100);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
 .res-badge{font-size:11px;font-weight:700;color:var(--o600);text-transform:uppercase;letter-spacing:.04em}
 .res-title{font-size:20px;font-weight:700}
-.mood-tag{font-size:12px;font-weight:600;background:var(--s50);color:var(--s800);border:1px solid var(--s200);padding:6px 12px;border-radius:99px}
+.mood-tag{font-size:12px;font-weight:600;background:var(--s50);color:var(--s800);border:1px solid var(--s200);padding:6px 12px;border-radius:99px;max-width:100%}
 .quote{background:linear-gradient(135deg,rgba(255,251,235,.9),rgba(255,247,237,.6));border:1px solid rgba(253,230,138,.8);border-radius:16px;padding:20px 20px 20px 34px;position:relative}
 .quote::before{content:'“';position:absolute;top:2px;left:12px;font-size:40px;font-family:Georgia,serif;color:rgba(146,64,14,.3)}
 .quote p{font-size:15px;line-height:1.6;font-weight:500}
@@ -258,13 +260,13 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
     <div class="brand">
       <div class="logo">🐥</div>
       <div>
-        <h1 class="grad-text">ABL Foods • İK Mola Merkezi</h1>
-        <p class="sub">Kahveni al, 5 dakika nefeslen, enerjini tazele! ☕🐟</p>
+        <h1 class="grad-text">ABL İK Mola Merkezi</h1>
+        <p class="sub">Türk kahveleri hüp, hünnaplar ham, enerji reset! ☕</p>
       </div>
     </div>
     <nav class="tabs">
       <button id="tabBtn2048" class="tab" onclick="switchTab('2048')">🐥 ABL 2048 🐟</button>
-      <button id="tabBtnFortune" class="tab active" onclick="switchTab('fortune')">☕ İK Kahve Falı & Mod</button>
+      <button id="tabBtnFortune" class="tab active" onclick="switchTab('fortune')">☕ Kahve Falı & Mod</button>
     </nav>
   </header>
 
@@ -278,7 +280,7 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
           <div class="row-between">
             <div>
               <span class="badge">Mini Oyun</span>
-              <h2>ABL 2048 Evrimi</h2>
+              <h2>ABL 2048</h2>
             </div>
             <button class="btn-soft" onclick="resetGame()">⟳ Yeniden</button>
           </div>
@@ -297,10 +299,10 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
           <div class="box">
             <span class="box-lbl">🎨 Oyun Teması Seçin:</span>
             <button class="theme-opt active" data-theme="civciv_balik" onclick="setGameTheme('civciv_balik')">
-              <span>🐣 Civciv & Balık Evrimi</span><span class="check"></span>
+              <span>🐣 Cikcik & Glukgluk</span><span class="check"></span>
             </button>
             <button class="theme-opt" data-theme="ik_kariyer" onclick="setGameTheme('ik_kariyer')">
-              <span>💼 İK Kariyer Basamakları</span><span class="check"></span>
+              <span>💼 Yeni Nesil Terfi</span><span class="check"></span>
             </button>
           </div>
 
@@ -308,7 +310,7 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
             <div class="ic">📸</div>
             <div style="flex:1">
               <h3>Ekip Fotoğraflarıyla Oyna!</h3>
-              <p>Taşların üzerine İK ekibindeki arkadaşlarınızın fotoğraflarını ve isimlerini koyarak oyunu kişiselleştirin!</p>
+              <p>Taşların üzerine ekip arkadaşlarınızın fotoğraflarını ve isimlerini koyarak oyunu kişiselleştirin!</p>
               <button class="btn-sky" onclick="togglePhotoDrawer()">📷 Ekip Fotoğraflarıyla Özelleştir</button>
             </div>
           </div>
@@ -318,7 +320,7 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
             <div class="drawer-head">
               <div>
                 <b>📸 Taşları Özelleştir</b>
-                <small>İsim yazın veya fotoğraf seçin; taşlarda anında görünür.</small>
+                <small>İsim yazın veya fotoğraf seçin; taşlarda görünür.</small>
               </div>
               <button class="icon-close" onclick="togglePhotoDrawer(false)" title="Kapat">✕</button>
             </div>
@@ -330,7 +332,7 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
           </div>
 
           <div class="legend-wrap">
-            <div class="legend-head"><span>🔍 Evrim Sıralaması</span><span>2 ➔ 2048</span></div>
+            <div class="legend-head"><span>🔍 2048 Sıralaması</span><span>2 ➔ 2048</span></div>
             <div id="evolutionLegend" class="legend"></div>
           </div>
         </div>
@@ -376,42 +378,45 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
         <div class="panel">
           <div class="intro">
             <span class="badge amber">Mola Ritüeli</span>
-            <h2>İK Kahve Falı & Modun ☕</h2>
-            <p>Bugünkü içeceğini ve ruh halini seç, ABL Foods falcısı fincanını yorumlasın!</p>
+            <h2>Kahve Falı & Modun ☕</h2>
+            <p>Bugünkü içeceğini ve ruh halini seç, Yüce Honos fincanını yorumlasın!</p>
           </div>
 
           <div>
             <label class="field-lbl" for="colleagueNameInput">👤 Adın veya Lakabın (İsteğe Bağlı)</label>
-            <input id="colleagueNameInput" class="text-in" type="text" maxlength="40" placeholder="Örn: Ayşe, Bordro Kraliçesi, İK'nın Civcivi...">
+            <input id="colleagueNameInput" class="text-in" type="text" maxlength="40" placeholder="Örn: Canım Kadın :p...">
           </div>
 
           <div>
             <span class="field-lbl">☕ Bugün Masanda Ne Var?</span>
+            <!-- data-name: paylaşım metninde görünen ad | data-title: sonuç başlığındaki kısa ad ("... Falı") -->
             <div class="chips">
-              <button class="drink selected" data-name="Türk Kahvesi" data-emoji="☕" onclick="selectDrink(this)">
-                <span class="ic">☕</span><span>Türk Kahvesi<small>Bol köpüklü & telveli</small></span>
+              <button class="drink selected" data-name="Türk kahvesi" data-title="Türk Kahvesi" data-emoji="☕" onclick="selectDrink(this)">
+                <span class="ic">☕</span><span>Türk kahvesi<small>Sevgi ablanın ellerinden</small></span>
               </button>
-              <button class="drink" data-name="Filtre Kahve" data-emoji="🧋" onclick="selectDrink(this)">
-                <span class="ic">🧋</span><span>Filtre Kahve<small>Ayıltıcı & odaklayıcı</small></span>
+              <button class="drink" data-name="Filtre kahve" data-title="Filtre Kahve" data-emoji="🧋" onclick="selectDrink(this)">
+                <span class="ic">🧋</span><span>Filtre kahve<small>Kimin demlediği ÇOK önemli</small></span>
               </button>
-              <button class="drink" data-name="Tavşan Kanı Çay" data-emoji="🫖" onclick="selectDrink(this)">
-                <span class="ic">🫖</span><span>Tavşan Kanı Çay<small>Ofis klasiği & samimi</small></span>
+              <button class="drink" data-name="Tavşan kanı çay" data-title="Tavşan Kanı Çay" data-emoji="🫖" onclick="selectDrink(this)">
+                <span class="ic">🫖</span><span>Tavşan kanı çay<small>Yanına da bir simit... simit hangi gün çıkacak?</small></span>
               </button>
-              <button class="drink" data-name="Papatya Çayı" data-emoji="🌼" onclick="selectDrink(this)">
-                <span class="ic">🌼</span><span>Papatya Çayı<small>Sakinlik & zen modu</small></span>
+              <button class="drink" data-name="Bitki çayı" data-title="Bitki Çayı" data-emoji="🌼" onclick="selectDrink(this)">
+                <span class="ic">🌼</span><span>Bitki çayı<small>Akli melekelerimizi koruyabilmemiz için</small></span>
               </button>
             </div>
           </div>
 
           <div>
-            <span class="field-lbl">🎭 Şu Anki İK Modun Hangisi?</span>
+            <span class="field-lbl">🎭 Şu Anki Modun Hangisi?</span>
+            <!-- data-name: sonuçtaki mod etiketi | buton yazısı: seçim ekranında görünen metin -->
             <div class="moods">
-              <button class="mood selected" data-name="Pazartesi Sendromlu Civciv" data-emoji="🐣" onclick="selectMood(this)"><span class="ic">🐣</span>Pazartesi Sendromlu</button>
-              <button class="mood" data-name="Mülakat Canavarı Köpekbalığı" data-emoji="🦈" onclick="selectMood(this)"><span class="ic">🦈</span>Mülakat Canavarı</button>
-              <button class="mood" data-name="Sessizce Yüzen Balık" data-emoji="🐟" onclick="selectMood(this)"><span class="ic">🐟</span>Sessizce Yüzüyorum</button>
-              <button class="mood" data-name="Cuma Neşeli Sarı Civciv" data-emoji="🐥" onclick="selectMood(this)"><span class="ic">🐥</span>Cuma Neşesi Modu</button>
-              <button class="mood" data-name="Evrak Denizinde Boğulan Balon Balığı" data-emoji="🐡" onclick="selectMood(this)"><span class="ic">🐡</span>Evraklarda Boğuluyorum</button>
-              <button class="mood" data-name="Tatlı Krizine Girmiş Tropikal Balık" data-emoji="🐠" onclick="selectMood(this)"><span class="ic">🐠</span>Acil Tatlı Lazım!</button>
+              <button class="mood selected" data-name="Daha dün cumaydı!" data-emoji="🐣" onclick="selectMood(this)"><span class="ic">🐣</span>Pazartesi sendromlu civciv</button>
+              <button class="mood" data-name="Bölüm sonu canavarı" data-emoji="☠️" onclick="selectMood(this)"><span class="ic">☠️</span>Başmakçı şövalyesi</button>
+              <button class="mood" data-name="Her karanlık gecenin bir aydınlık sabahı vardır" data-emoji="🐡" onclick="selectMood(this)"><span class="ic">🐡</span>Bordro gazisi</button>
+              <button class="mood" data-name="Kurban pazarlığımız başlamıştır" data-emoji="🦈" onclick="selectMood(this)"><span class="ic">🦈</span>Mülakat canavarı</button>
+              <button class="mood" data-name="Rutin nimettir" data-emoji="🐟" onclick="selectMood(this)"><span class="ic">🐟</span>Sessizce süzülen balık</button>
+              <button class="mood" data-name="Acil tatlı lazım!" data-emoji="🐠" onclick="selectMood(this)"><span class="ic">🐠</span>Tatlı krizi!</button>
+              <button class="mood" data-name="İş çıkışı birası!" data-emoji="🍻" onclick="selectMood(this)"><span class="ic">🍻</span>Cuma neşesi... yükleniyor</button>
             </div>
           </div>
 
@@ -424,7 +429,7 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
           <div id="fortuneWaitingBox" class="waiting">
             <div id="waitingCupEmoji" class="cup-circle">☕</div>
             <h3 id="waitingTitle">Niyetini Tut, Fincanını Kapat!</h3>
-            <p id="waitingSubtitle">İçeceğini ve bugünkü İK modunu seçip butona tıkla. Bakalım telvelerin arasından sana hangi civciv veya balık göz kırpacak? 🐥🐟</p>
+            <p id="waitingSubtitle">İçeceğini ve bugünkü modunu seçip butona tıkla. Bakalım telvelerin arasından sana neler göz kırpacak? 🐥🐟</p>
           </div>
 
           <div id="fortuneResultBox" class="result">
@@ -433,17 +438,17 @@ h2{font-size:24px;font-weight:700;margin-top:4px;color:var(--sl800)}
               <div class="res-left">
                 <div id="resDrinkEmoji" class="res-icon">☕</div>
                 <div>
-                  <div class="res-badge">ABL Foods Fal Köşesi</div>
+                  <div class="res-badge">ABL Fal Köşesi</div>
                   <h3 id="resTitle" class="res-title">Fincanında Kısmet Var!</h3>
                 </div>
               </div>
-              <span id="resMoodTag" class="mood-tag">🐣 Pazartesi Sendromlu</span>
+              <span id="resMoodTag" class="mood-tag">🐣 Daha dün cumaydı!</span>
             </div>
 
             <div class="quote"><p id="resFortuneText"></p></div>
 
             <div>
-              <div class="energy-title">✨ Günün İK Enerji Kartı</div>
+              <div class="energy-title">✨ Günün Enerji Kartı</div>
               <div class="energy">
                 <div class="e-card">
                   <div id="cardAnimalEmoji" class="ic">🐥</div>
@@ -810,8 +815,12 @@ function clearAllCustomPhotos(){
 /* =========================================================
    6. İK KAHVE FALI
    ========================================================= */
-let selectedDrink = { name:'Türk Kahvesi', emoji:'☕' };
-let selectedMood  = { name:'Pazartesi Sendromlu Civciv', emoji:'🐣' };
+// Başlangıç seçimleri, HTML'de "selected" olan butonlardan okunur (isim değişse de uyumlu kalır)
+function readDrink(btn){ return { name: btn.dataset.name, title: btn.dataset.title || btn.dataset.name, emoji: btn.dataset.emoji }; }
+function readMood(btn){ return { name: btn.dataset.name, emoji: btn.dataset.emoji }; }
+
+let selectedDrink = readDrink(document.querySelector('.drink.selected') || document.querySelector('.drink'));
+let selectedMood  = readMood(document.querySelector('.mood.selected') || document.querySelector('.mood'));
 let lastGeneratedShareText = '';
 let fortuneTimer = null;
 
@@ -844,13 +853,13 @@ const SHIELD_LEVELS = [
 ];
 
 function selectDrink(btn){
-  selectedDrink = { name: btn.dataset.name, emoji: btn.dataset.emoji };
+  selectedDrink = readDrink(btn);
   document.querySelectorAll('.drink').forEach(b => b.classList.toggle('selected', b === btn));
   $('waitingCupEmoji').textContent = selectedDrink.emoji;
 }
 
 function selectMood(btn){
-  selectedMood = { name: btn.dataset.name, emoji: btn.dataset.emoji };
+  selectedMood = readMood(btn);
   document.querySelectorAll('.mood').forEach(b => b.classList.toggle('selected', b === btn));
 }
 
@@ -867,7 +876,7 @@ function generateFortune(){
   cup.textContent = selectedDrink.emoji;
   cup.classList.add('shaking');
   $('waitingTitle').textContent = 'Fincan soğuyor, şekiller beliriyor... 🔍';
-  $('waitingSubtitle').textContent = 'ABL Foods falcısı civcivlerin ve balıkların dilini çözümlüyor...';
+  $('waitingSubtitle').textContent = 'Yüce Honos civcivlerin ve balıkların dilini çözümlüyor...';
 
   fortuneTimer = setTimeout(() => {
     cup.classList.remove('shaking');
@@ -882,7 +891,7 @@ function generateFortune(){
     const shield = pick(SHIELD_LEVELS);
 
     $('resDrinkEmoji').textContent = selectedDrink.emoji;
-    $('resTitle').textContent = name ? `${name} İçin ${selectedDrink.name} Falı` : `Günün ${selectedDrink.name} Falı`;
+    $('resTitle').textContent = name ? `${name} İçin ${selectedDrink.title} Falı` : `Günün ${selectedDrink.title} Falı`;
     $('resMoodTag').textContent = `${selectedMood.emoji} ${selectedMood.name}`;
     $('resFortuneText').textContent = `${greeting} ${fortune}`;
     $('cardAnimalEmoji').textContent = animal.emoji;
@@ -895,7 +904,7 @@ function generateFortune(){
       `🐥 *ABL Foods - İK Mola Falım* 🐟\n` +
       `☕ *İçecek:* ${selectedDrink.emoji} ${selectedDrink.name}\n` +
       `🎭 *Günün Modu:* ${selectedMood.emoji} ${selectedMood.name}\n\n` +
-      `🔮 *Fal Yorumu:* "${greeting} ${fortune}"\n\n` +
+      `🔮 *Yüce Honos'un Yorumu:* "${greeting} ${fortune}"\n\n` +
       `✨ *Ruh Hayvanım:* ${animal.emoji} ${animal.name} | *Şanslı Atıştırmalık:* ${snack.emoji} ${snack.name}`;
 
     result.classList.add('show');
@@ -933,6 +942,7 @@ function copyFortuneToClipboard(){
    7. BAŞLAT
    ========================================================= */
 $('bestScore').textContent = bestScore;
+$('waitingCupEmoji').textContent = selectedDrink.emoji;
 resetGame();
 renderEvolutionLegend();
 switchTab('fortune');   // 👈 açılışta fal sekmesi varsayılan
